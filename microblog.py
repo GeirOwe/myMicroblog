@@ -7,4 +7,7 @@
 # is called app and is a member of the app package. The from app import app statement 
 # imports the app variable that is a member of the app package.
 
+# Flask needs to be told how to import it, by setting the FLASK_APP environment variable:
+# (venv) $ export FLASK_APP=microblog.py
+
 from app import app

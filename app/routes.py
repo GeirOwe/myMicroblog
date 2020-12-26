@@ -27,6 +27,10 @@ def index():
         {
             'author': {'username': 'Leo Tolstoy'},
             'body': 'War and Peace'
+        },
+        {
+            'author': {'username': 'Fyodor Dostoyevsky'},
+            'body': 'Crime and Punishment'
         }
     ]
     return render_template('index.html', title='Home', user=user, posts=posts)

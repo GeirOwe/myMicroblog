@@ -73,3 +73,8 @@ sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) UNIQUE constraint failed
 [parameters: ('Ronja', "I'm not in the mood to write anything about myself, so consider this text to be blank!", 1)]
 (Background on this error at: http://sqlalche.me/e/13/gkpj)
 2020-12-28 12:32:33,393 INFO: Microblog startup [in /Users/geirowe/Documents/GitHub/myMicroblog/app/__init__.py:60]
+2020-12-28 12:47:06,485 INFO: Microblog startup [in /Users/geirowe/Documents/GitHub/myMicroblog/app/__init__.py:60]
+2020-12-28 12:47:36,963 INFO: Microblog startup [in /Users/geirowe/Documents/GitHub/myMicroblog/app/__init__.py:60]
+2020-12-28 13:01:12,317 INFO: Microblog startup [in /Users/geirowe/Documents/GitHub/myMicroblog/app/__init__.py:60]
+2020-12-28 13:10:22,672 INFO: Microblog startup [in /Users/geirowe/Documents/GitHub/myMicroblog/app/__init__.py:60]
+2020-12-28 13:14:25,950 INFO: Microblog startup [in /Users/geirowe/Documents/GitHub/myMicroblog/app/__init__.py:60]

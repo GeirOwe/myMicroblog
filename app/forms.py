@@ -51,3 +51,10 @@ class EditProfileForm(FlaskForm):
             user = User.query.filter_by(username=self.username.data).first()
             if user is not None:
                 raise ValidationError('Please use a different username.')
+
+#But how can a follow or unfollow action be triggered from a web form when the only 
+# thing the user needs to do is click on "Follow" or "Unfollow", without submitting any data?
+#The only elements in the form are going to be the CSRF token, which is implemented as a hidden 
+# field and added automatically by Flast-WTF, and a submit button
+class EmptyForm(FlaskForm):
+    submit = SubmitField('Submit')

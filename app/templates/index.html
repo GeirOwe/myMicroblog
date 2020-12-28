@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>Wake up, {{ current_user.username }} ....</h1>
+    <h1>Books to read {{ current_user.username }} .... among the best ever written ....</h1>
     {% for post in posts %}
     <div><p>{{ post.author.username }}: <b>{{ post.body }}</b></p></div>
     {% endfor %}

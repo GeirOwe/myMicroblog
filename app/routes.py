@@ -16,11 +16,22 @@ from app import app
 from app import db
 from app.forms import LoginForm
 from app.forms import RegistrationForm
+from app.forms import EditProfileForm
 from app.models import User
 from flask_login import current_user, login_user
 from flask_login import logout_user
 from flask_login import login_required
 from werkzeug.urls import url_parse
+from datetime import datetime
+
+# The @before_request decorator from Flask register the decorated function to be executed right 
+# before the view function. This is extremely useful because now I can insert code that I want 
+# to execute before any view function in the application, and I can have it in a single place. 
+@app.before_request
+def before_request():
+    if current_user.is_authenticated:
+        current_user.last_seen = datetime.utcnow()
+        db.session.commit()
 
 #the default start page
 @app.route('/')
@@ -87,3 +98,37 @@ def register():
         flash('Congratulations, you are now a registered user!')
         return redirect(url_for('login'))
     return render_template('register.html', title='Register', form=form)
+
+# To create a user profile page, let's first write a new view function that 
+# maps to the /user/<username> URL. Flask will accept any text in that portion of the URL, and 
+# will invoke the view function with the actual text as an argument. For example, if the client 
+# browser requests URL /user/susan, the view function is going to be called with the argument 
+# username set to 'susan'. 
+@app.route('/user/<username>')
+@login_required
+def user(username):
+    user = User.query.filter_by(username=username).first_or_404()
+    posts = [
+        {'author': user, 'body': 'Test post #1'},
+        {'author': user, 'body': 'Test post #2'}
+    ]
+    return render_template('user.html', user=user, posts=posts)
+
+# I also need to give users a form in which they can enter some information about themselves. 
+# This view function is slightly different to the other ones that process a form. If 
+# validate_on_submit() # returns True I copy the data from the form into the user object and 
+# then write the object to the database. 
+@app.route('/edit_profile', methods=['GET', 'POST'])
+@login_required
+def edit_profile():
+    form = EditProfileForm(current_user.username)
+    if form.validate_on_submit():
+        current_user.username = form.username.data
+        current_user.about_me = form.about_me.data
+        db.session.commit()
+        flash('Your changes have been saved.')
+        return redirect(url_for('edit_profile'))
+    elif request.method == 'GET':
+        form.username.data = current_user.username
+        form.about_me.data = current_user.about_me
+    return render_template('edit_profile.html', title='Edit Profile', form=form)
